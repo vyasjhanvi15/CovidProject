@@ -117,7 +117,7 @@ Join CovidVaccinations AS vaccine
 WHERE death.continent IS NOT NULL 
 --ORDER BY 2,3
 )
-SELECT *, (RollingPeopleVaccinated/Population)*100
+SELECT *, (RollingPeopleVaccinated/Population)*100 AS RollingPeopleVaccinatedPercentbyPop
 FROM PopvsVac
 
 
@@ -150,7 +150,7 @@ JOIN CovidVaccinations AS vaccine
 --WHERE death.continent is not null 
 --ORDER BY 2,3
 
-SELECT *, (RollingPeopleVaccinated/Population)*100
+SELECT *, (RollingPeopleVaccinated/Population)*100 AS RollingPeopleVaccinatedPercentbyPop
 FROM #PercentPopulationVaccinated
 
 
@@ -166,8 +166,8 @@ CREATE VIEW PercentPopulationVaccinated AS
 	,	vaccine.new_vaccinations
 	,	SUM(CONVERT(int,vaccine.new_vaccinations)) OVER (Partition by death.location ORDER BY death.location, death.Date) AS RollingPeopleVaccinated
 --	, (RollingPeopleVaccinated/population)*100
-	FROM CovidDeaths AS death
-	JOIN CovidVaccinations AS vaccine
-		ON death.location = vaccine.location
-		AND death.date = vaccine.date
-	WHERE death.continent IS NOT NULL
+FROM CovidDeaths AS death
+JOIN CovidVaccinations AS vaccine
+	ON death.location = vaccine.location
+	AND death.date = vaccine.date
+WHERE death.continent IS NOT NULL
