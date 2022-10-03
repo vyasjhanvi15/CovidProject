@@ -3,6 +3,11 @@ SELECT *
 FROM CovidDeaths
 ORDER BY location, date
 
+
+SELECT * 
+FROM CovidVaccinations
+ORDER BY location, date
+
 -- Total Cases vs Total Deaths 
 -- Showing likelyhood of dying in the country
 
